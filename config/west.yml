@@ -1,5 +1,7 @@
 manifest:
   remotes:
+    - name: codeyoma
+      url-base: https://github.com/codeyoma
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
     - name: sekigon-gonnoc
@@ -24,6 +26,11 @@ manifest:
     - name: zmk-rgbled-widget
       remote: caksoylar
       revision: v0.3-branch
+
+    # KeyLay: the active layer and batteries for the KeyLay app, and the &keylay key
+    - name: keylay
+      remote: codeyoma
+      revision: main
 
   self:
     path: config
