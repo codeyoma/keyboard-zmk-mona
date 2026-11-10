@@ -19,6 +19,12 @@
 / {
 	behaviors {
 
+        // The KeyLay key: opens or closes the KeyLay cheat sheet, see src/keylay.c
+        keylay: keylay {
+            compatible              = "zmk,behavior-keylay";
+            #binding-cells          = <0>;
+        };
+
         hm: home_row_mods {
             compatible              = "zmk,behavior-hold-tap";
             #binding-cells          = <2>;
