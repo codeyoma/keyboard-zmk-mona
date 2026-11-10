@@ -20,4 +20,5 @@ parse_config:
 draw_config:
   # The wheel, drawn as one more key by scripts/keymap.sh
   svg_extra_style: |
-    .keypos-42 rect { rx: 35px; ry: 35px; }
+    .keypos-42 rect { rx: 50%; ry: 50%; fill: #e4e7ec; stroke: #8a929e; stroke-width: 2; stroke-dasharray: 3 2; }
+    .keypos-42 text.tap { font-weight: bold; }

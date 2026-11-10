@@ -14,8 +14,9 @@ from pathlib import Path
 
 import yaml
 
-WHEEL_KEY = "            , <&key_physical_attrs  70  70  515  140       0     0     0>  // wheel\n"
-WHEEL_LEGENDS = {"&inc_dec_kp C_VOL_UP C_VOL_DN": "Vol +/−"}
+WHEEL_KEY = "            , <&key_physical_attrs  96  96  505  122       0     0     0>  // wheel\n"
+# Clockwise on top, counter-clockwise at the bottom
+WHEEL_LEGENDS = {"&inc_dec_kp C_VOL_UP C_VOL_DN": {"t": "Vol", "s": "↻+", "h": "↺−"}}
 
 shield = Path("boards/shields/mona2/mona2.dtsi").read_text()
 layout = re.search(r"physical_layout0: physical_layout_0 \{.*?\n    \};\n", shield, re.S).group(0)

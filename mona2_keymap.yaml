@@ -59,7 +59,10 @@ layers:
     - SPACE
     - t: ▽
       type: trans
-  - Vol +/−
+  - &id001
+    t: Vol
+    s: ↻+
+    h: ↺−
   ARST:
   - - Q
     - W
@@ -118,7 +121,7 @@ layers:
     - SPACE
     - t: ▽
       type: trans
-  - Vol +/−
+  - *id001
   Lower:
   - - GLOBE
     - HOME

@@ -51,7 +51,7 @@ physical_layout0: physical_layout_0 {
             , <&key_physical_attrs 100 100  788  372 (-1500)   838   422>
             , <&key_physical_attrs 100 100  901  360       0     0     0>
             , <&key_physical_attrs 100 100 1350  355       0     0     0>
-            , <&key_physical_attrs  70  70  515  140       0     0     0>  // wheel
+            , <&key_physical_attrs  96  96  505  122       0     0     0>  // wheel
             ;
     };
 };
