@@ -1,0 +1,58 @@
+/**
+ *	https://zmk.dev/docs/config/behaviors
+ */
+
+
+&lt {
+    flavor                  = "tap-preferred";
+    tapping-term-ms         = <LT_TAPPING_TERM_MS>;
+    quick-tap-ms            = <0>;
+    require-prior-idle-ms   = <IDLE_MS>;
+};
+
+&mt {
+    flavor                  = "tap-preferred";
+	tapping-term-ms         = <TAPPING_TERM_MS>;
+	quick-tap-ms            = <QUICK_TAP_MS>;
+};
+
+/ {
+	behaviors {
+
+        hm: home_row_mods {
+            compatible              = "zmk,behavior-hold-tap";
+            #binding-cells          = <2>;
+            flavor                  = "balanced";
+            require-prior-idle-ms   = <IDLE_MS>;
+            tapping-term-ms         = <TAPPING_TERM_MS>;
+            quick-tap-ms            = <QUICK_TAP_MS>;
+            bindings                = <&kp>, <&kp>;
+        };
+
+        td_sqt: tap_dance_quote {
+            compatible              = "zmk,behavior-tap-dance";
+            #binding-cells          = <0>;
+            tapping-term-ms         = <LT_TAPPING_TERM_MS>;
+            bindings                = <&kp SQT>, <&kp DQT>;
+        };
+
+        /*
+        td_lower_sp: tap_dance_lower_space {
+            compatible              = "zmk,behavior-tap-dance";
+            #binding-cells          = <0>;
+            tapping-term-ms         = <LT_TAPPING_TERM_MS>;
+            bindings                = <&mo LOWER>, <&kp SPACE>;
+        };
+        */
+
+        /*
+        td: tap_dance_mods {
+            compatible              = "zmk,behavior-tap-dance";
+            #binding-cells          = <0>;
+            tapping-term-ms         = <TD_TAPPING_TERM_MS>;
+            bindings                = <&kp>, <&kp>;
+        };
+        */
+
+    };
+};

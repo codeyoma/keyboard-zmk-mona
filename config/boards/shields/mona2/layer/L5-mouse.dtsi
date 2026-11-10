@@ -1,0 +1,19 @@
+/**
+ *
+ */
+
+/ {
+  keymap {
+    compatible = "zmk,keymap";
+
+	mouse_layer {
+		label = "Mouse";
+		bindings = <
+	XXXXXXXX        XXXXXXXX        &mmv MOVE_UP    XXXXXXXX        &tog MOUSE                                          XXXXXXXX        XXXXXXXX        XXXXXXXX        XXXXXXXX        XXXXXXXX
+	XXXXXXXX        &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_RIGHT XXXXXXXX                            ________        &mkp MB4        &mkp LCLK       &mkp RCLK       &mkp MCLK       &mkp MB5
+	&kp LCTRL       &kp LGUI        &kp LALT        &kp LSHFT       XXXXXXXX        ________            ________        &mouse_speed    &mo SCROLL      XXXXXXXX        XXXXXXXX        &mo SNIPE
+	________        ________        ________        ________        ________        ________            ________        ________        ________
+		>;
+	};
+  };
+};

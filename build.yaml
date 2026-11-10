@@ -1,0 +1,15 @@
+# GitHub Actions build matrix. The right half has the trackball and is the central:
+# it connects to the computer and the left half connects to it.
+---
+include:
+  - board: seeeduino_xiao_ble
+    shield: mona2_r rgbled_adapter
+    artifact-name: mona2_right
+
+  - board: seeeduino_xiao_ble
+    shield: mona2_l rgbled_adapter
+    artifact-name: mona2_left
+
+  - board: seeeduino_xiao_ble
+    shield: settings_reset
+    artifact-name: mona2_reset

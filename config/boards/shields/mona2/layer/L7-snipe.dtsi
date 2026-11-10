@@ -1,0 +1,20 @@
+/**
+ * Held with the / key on the Mouse layer. Every key falls through to the Mouse layer; while this
+ * layer is on, the input listeners in mona2.keymap slow the mouse keys (speed level 1) and the trackball.
+ */
+
+/ {
+  keymap {
+    compatible = "zmk,keymap";
+
+	snipe_layer {
+		label = "Snipe";
+		bindings = <
+	________        ________        ________        ________        ________                                            ________        ________        ________        ________        ________
+	________        ________        ________        ________        ________                            ________        ________        ________        ________        ________        ________
+	________        ________        ________        ________        ________        ________            ________        ________        ________        ________        ________        ________
+	________        ________        ________        ________        ________        ________            ________        ________        ________
+		>;
+	};
+  };
+};

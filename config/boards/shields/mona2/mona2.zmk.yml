@@ -1,0 +1,12 @@
+file_format: "1"
+id: mona2
+name: moNa2
+type: shield
+url: https://github.com/sayu-hub/zmk-config-moNa2-v2
+requires: [seeeduino_xiao_ble]
+features:
+  - keys
+  - pointer
+siblings:
+  - mona2_l
+  - mona2_r
