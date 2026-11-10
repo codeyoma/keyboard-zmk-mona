@@ -13,10 +13,15 @@
 #define SNIPE   7
 #define TEST	8
 
+// Speed level sets of &mouse_speed and mouse_speed_xy (src/mouse_speed.c)
+#define MS_NORMAL	0
+#define MS_SNIPE	1
+
 / {
   // Runs the trackball at the CPI of the speed level picked with &mouse_speed (src/mouse_speed.c).
   // The levels are the Charybdis QMK DPI steps: CHARYBDIS_MINIMUM_DEFAULT_DPI 1200 plus
-  // CHARYBDIS_DEFAULT_DPI_CONFIG_STEP 400, four steps.
+  // CHARYBDIS_DEFAULT_DPI_CONFIG_STEP 400, four steps; sniping CHARYBDIS_MINIMUM_SNIPING_DPI 600
+  // plus CHARYBDIS_SNIPING_DPI_CONFIG_STEP 200, two steps.
   mouse_speed_xy: mouse_speed_xy {
     compatible = "zmk,input-processor-mouse-speed";
     #input-processor-cells = <1>;
@@ -24,6 +29,7 @@
     codes = <INPUT_REL_X INPUT_REL_Y>;
     sensor-cpi = <2400>;                      // res-cpi in mona2_paw3222.dtsi
     cpi-levels = <1200 1600 2000 2400>;
+    snipe-cpi-levels = <600 800>;
     track-remainders;
   };
 
@@ -31,12 +37,12 @@
     compatible = "zmk,input-listener";
     device = <&trackball>;
 
-    input-processors = <&mouse_speed_xy 0>;
+    input-processors = <&mouse_speed_xy MS_NORMAL>;
 
-    // Holding Snipe runs at 600 CPI, the Charybdis CHARYBDIS_MINIMUM_SNIPING_DPI
+    // Holding Snipe runs at the sniping level's CPI, stepped with &mouse_speed MS_SNIPE
     snipe {
       layers = <SNIPE>;
-      input-processors = <&mouse_speed_xy 600>;
+      input-processors = <&mouse_speed_xy MS_SNIPE>;
     };
 
     // The ball becomes a scroll wheel; rolling it towards you scrolls down.

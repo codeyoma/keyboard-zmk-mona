@@ -18,6 +18,10 @@
 #define SNIPE	7
 #define TEST	8
 
+// Speed level sets of &mouse_speed (src/mouse_speed.c)
+#define MS_NORMAL	0
+#define MS_SNIPE	1
+
 #define ________	&trans
 #define XXXXXXXX 	&none
 
@@ -28,11 +32,11 @@
 
 #define HM_LP	&hm LCTRL
 #define HM_LR	&hm LGUI
-#define HM_LM	&hm LALT
+#define HM_LM	&hm_alt LALT
 #define HM_LI	&hm LSHFT
 
-#define HM_RI	&hm LSHFT
-#define HM_RM	&hm LALT
+#define HM_RI	&hm RSHFT
+#define HM_RM	&hm_alt RALT
 #define HM_RR	&hm LGUI
 #define HM_RP	&hm LCTRL
 
@@ -41,8 +45,9 @@
 #define TD_TAPPING_TERM_MS	350
 #define QUICK_TAP_MS		140
 #define GLOBAL_QUICK_TAP_MS	150
-#define IDLE_MS				125
+#define IDLE_MS				150
 #define CB_MINIMUM_SPEED	70
+#define MS_COMBO_TERM		50
 #define	DEFAULT_SPEED		50
 
 #define PARAM_ZERO	0

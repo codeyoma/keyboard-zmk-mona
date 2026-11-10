@@ -1,5 +1,7 @@
-description: Steps the mouse key speed level (src/mouse_speed.c), wrapping back to the first level
+description: |
+  Steps a trackball speed level (src/mouse_speed.c), wrapping back to the first level.
+  The parameter picks the set: 0 for the normal levels, 1 for the sniping levels.
 
 compatible: "zmk,behavior-mouse-speed"
 
-include: zero_param.yaml
+include: one_param.yaml

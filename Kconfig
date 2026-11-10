@@ -15,6 +15,12 @@ config ZMK_MOUSE_SPEED_LEVELS
     help
       The CPI of each level is set by the cpi-levels of the input processor.
 
+config ZMK_MOUSE_SPEED_SNIPE_LEVELS
+    int "Number of sniping speed levels"
+    default 2
+    help
+      The CPI of each level is set by the snipe-cpi-levels of the input processor.
+
 config ZMK_MOUSE_SPEED_DEFAULT_LEVEL
     int "Mouse key speed level before any level has been saved"
     default 2

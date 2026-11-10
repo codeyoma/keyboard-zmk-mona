@@ -1,13 +1,15 @@
 /*
  * SPDX-License-Identifier: MIT
  *
- * Mouse key speed levels.
+ * Trackball speed levels, like the DPI steps of a QMK Charybdis.
  *
- * &mouse_speed steps the level 1 -> 2 -> ... -> CONFIG_ZMK_MOUSE_SPEED_LEVELS -> 1, like
- * DPI_MOD on a QMK Charybdis. A zmk,input-processor-mouse-speed processor turns the sensor's
- * counts (taken at its sensor-cpi) into the CPI of the current level, from its cpi-levels list.
- * The processor's parameter: 0 uses the current level's CPI, any other value is a fixed CPI
- * (used for sniping). The level is saved to flash, so it survives a restart.
+ * Two sets of levels: the normal one and the sniping one. &mouse_speed MS_NORMAL steps the normal
+ * level 1 -> 2 -> ... -> CONFIG_ZMK_MOUSE_SPEED_LEVELS -> 1 (DPI_MOD on the Charybdis), and
+ * &mouse_speed MS_SNIPE steps the sniping level the same way through
+ * CONFIG_ZMK_MOUSE_SPEED_SNIPE_LEVELS (S_D_MOD). A zmk,input-processor-mouse-speed processor turns
+ * the sensor's counts (taken at its sensor-cpi) into the CPI of the current level of one set:
+ * its parameter is MS_NORMAL for cpi-levels, MS_SNIPE for snipe-cpi-levels.
+ * Both levels are saved to flash, so they survive a restart.
  */
 
 #include <zephyr/device.h>
@@ -21,38 +23,46 @@
 
 LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
-#define LEVELS CONFIG_ZMK_MOUSE_SPEED_LEVELS
+#define MS_NORMAL 0
+#define MS_SNIPE 1
+#define SETS 2
 
 BUILD_ASSERT(CONFIG_ZMK_MOUSE_SPEED_DEFAULT_LEVEL >= 1 &&
                  CONFIG_ZMK_MOUSE_SPEED_DEFAULT_LEVEL <= CONFIG_ZMK_MOUSE_SPEED_LEVELS,
              "The default mouse speed level must be between 1 and the number of levels");
 
-static uint8_t level = CONFIG_ZMK_MOUSE_SPEED_DEFAULT_LEVEL;
+static const uint8_t level_counts[SETS] = {CONFIG_ZMK_MOUSE_SPEED_LEVELS,
+                                           CONFIG_ZMK_MOUSE_SPEED_SNIPE_LEVELS};
+
+// The current level of each set, from 1
+static uint8_t levels[SETS] = {CONFIG_ZMK_MOUSE_SPEED_DEFAULT_LEVEL, 1};
 
 #if IS_ENABLED(CONFIG_SETTINGS)
 
-static void save_level(struct k_work *work) {
-    int err = settings_save_one("mouse_speed/level", &level, sizeof(level));
+static void save_levels(struct k_work *work) {
+    int err = settings_save_one("mouse_speed/levels", levels, sizeof(levels));
     if (err < 0) {
-        LOG_ERR("Failed to save the mouse speed level (%d)", err);
+        LOG_ERR("Failed to save the mouse speed levels (%d)", err);
     }
 }
 
-static K_WORK_DELAYABLE_DEFINE(save_level_work, save_level);
+static K_WORK_DELAYABLE_DEFINE(save_levels_work, save_levels);
 
 static int mouse_speed_settings_set(const char *name, size_t len, settings_read_cb read_cb,
                                     void *cb_arg) {
     const char *next;
-    uint8_t saved;
+    uint8_t saved[SETS];
 
-    if (!settings_name_steq(name, "level", &next) || next) {
+    if (!settings_name_steq(name, "levels", &next) || next) {
         return -ENOENT;
     }
-    if (len != sizeof(saved) || read_cb(cb_arg, &saved, sizeof(saved)) != sizeof(saved)) {
+    if (len != sizeof(saved) || read_cb(cb_arg, saved, sizeof(saved)) != sizeof(saved)) {
         return -EINVAL;
     }
-    if (saved >= 1 && saved <= LEVELS) {
-        level = saved;
+    for (int set = 0; set < SETS; set++) {
+        if (saved[set] >= 1 && saved[set] <= level_counts[set]) {
+            levels[set] = saved[set];
+        }
     }
     return 0;
 }
@@ -62,7 +72,7 @@ SETTINGS_STATIC_HANDLER_DEFINE(mouse_speed, "mouse_speed", NULL, mouse_speed_set
 
 #endif /* IS_ENABLED(CONFIG_SETTINGS) */
 
-/* The behavior that steps the level */
+/* The behavior that steps a level */
 
 #define DT_DRV_COMPAT zmk_behavior_mouse_speed
 
@@ -70,11 +80,16 @@ SETTINGS_STATIC_HANDLER_DEFINE(mouse_speed, "mouse_speed", NULL, mouse_speed_set
 
 static int mouse_speed_binding_pressed(struct zmk_behavior_binding *binding,
                                        struct zmk_behavior_binding_event event) {
-    level = level % LEVELS + 1;
-    LOG_DBG("Mouse speed level %d of %d", level, LEVELS);
+    uint32_t set = binding->param1;
+
+    if (set >= SETS) {
+        return -ENOTSUP;
+    }
+    levels[set] = levels[set] % level_counts[set] + 1;
+    LOG_DBG("Mouse speed set %d: level %d of %d", set, levels[set], level_counts[set]);
 
 #if IS_ENABLED(CONFIG_SETTINGS)
-    k_work_reschedule(&save_level_work, K_MSEC(CONFIG_ZMK_SETTINGS_SAVE_DEBOUNCE));
+    k_work_reschedule(&save_levels_work, K_MSEC(CONFIG_ZMK_SETTINGS_SAVE_DEBOUNCE));
 #endif
     return ZMK_BEHAVIOR_OPAQUE;
 }
@@ -102,7 +117,7 @@ BEHAVIOR_DT_INST_DEFINE(0, NULL, NULL, NULL, NULL, POST_KERNEL,
 struct mouse_speed_scaler_config {
     uint8_t type;
     uint16_t sensor_cpi;
-    const uint16_t *cpi_levels;
+    const uint16_t *cpi_levels[SETS];
     size_t codes_len;
     uint16_t codes[];
 };
@@ -120,7 +135,8 @@ static int mouse_speed_handle_event(const struct device *dev, struct input_event
             continue;
         }
 
-        int32_t cpi = param1 ? param1 : cfg->cpi_levels[level - 1];
+        uint32_t set = param1 < SETS ? param1 : MS_NORMAL;
+        int32_t cpi = cfg->cpi_levels[set][levels[set] - 1];
 
         // Keep the remainder, so slow movements are not lost at the low levels
         int32_t value = event->value * cpi;
@@ -142,13 +158,16 @@ static struct zmk_input_processor_driver_api mouse_speed_scaler_driver_api = {
 };
 
 #define MOUSE_SPEED_SCALER_INST(n)                                                                 \
-    BUILD_ASSERT(DT_INST_PROP_LEN(n, cpi_levels) == LEVELS,                                        \
+    BUILD_ASSERT(DT_INST_PROP_LEN(n, cpi_levels) == CONFIG_ZMK_MOUSE_SPEED_LEVELS,                 \
                  "cpi-levels needs one CPI per mouse speed level");                                 \
+    BUILD_ASSERT(DT_INST_PROP_LEN(n, snipe_cpi_levels) == CONFIG_ZMK_MOUSE_SPEED_SNIPE_LEVELS,     \
+                 "snipe-cpi-levels needs one CPI per sniping level");                               \
     static const uint16_t mouse_speed_cpi_levels_##n[] = DT_INST_PROP(n, cpi_levels);              \
+    static const uint16_t mouse_speed_snipe_cpi_levels_##n[] = DT_INST_PROP(n, snipe_cpi_levels);  \
     static const struct mouse_speed_scaler_config mouse_speed_scaler_config_##n = {                \
         .type = DT_INST_PROP_OR(n, type, INPUT_EV_REL),                                            \
         .sensor_cpi = DT_INST_PROP(n, sensor_cpi),                                                 \
-        .cpi_levels = mouse_speed_cpi_levels_##n,                                                  \
+        .cpi_levels = {mouse_speed_cpi_levels_##n, mouse_speed_snipe_cpi_levels_##n},              \
         .codes_len = DT_INST_PROP_LEN(n, codes),                                                   \
         .codes = DT_INST_PROP(n, codes),                                                           \
     };                                                                                             \

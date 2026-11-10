@@ -18,7 +18,9 @@ parse_config:
     "&mkp MCLK": Middle click
     "&mkp MB4": Back
     "&mkp MB5": Forward
-    "&mouse_speed": Speed level
+    "&mouse_speed MS_NORMAL": Speed level
+    "&mouse_speed MS_SNIPE": Snipe speed
+    "&mo SCROLL": Scroll
 draw_config:
   # The wheel, drawn as one more key by scripts/keymap.sh
   svg_extra_style: |

@@ -1,6 +1,7 @@
 description: |
   Turns sensor counts into the CPI of the current speed level (src/mouse_speed.c). The
-  parameter is 0 for the current level's CPI, or a fixed CPI such as the sniping CPI.
+  parameter is 0 for the current normal level (cpi-levels), 1 for the current sniping level
+  (snipe-cpi-levels).
 
 compatible: "zmk,input-processor-mouse-speed"
 
@@ -21,3 +22,7 @@ properties:
     type: array
     required: true
     description: The CPI of each speed level, slowest first
+  snipe-cpi-levels:
+    type: array
+    required: true
+    description: The CPI of each sniping level, slowest first

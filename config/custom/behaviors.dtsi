@@ -35,11 +35,24 @@
             bindings                = <&kp>, <&kp>;
         };
 
-        // Steps the trackball speed level, see src/mouse_speed.c and
+        // Alt home row mod: holds only after the tapping term, since Option + letter types
+        // special characters on macOS (get_permissive_hold on the Charybdis)
+        hm_alt: home_row_mods_alt {
+            compatible              = "zmk,behavior-hold-tap";
+            #binding-cells          = <2>;
+            flavor                  = "tap-preferred";
+            require-prior-idle-ms   = <IDLE_MS>;
+            tapping-term-ms         = <TAPPING_TERM_MS>;
+            quick-tap-ms            = <QUICK_TAP_MS>;
+            bindings                = <&kp>, <&kp>;
+        };
+
+        // Steps a trackball speed level: &mouse_speed MS_NORMAL (DPI_MOD on the Charybdis) or
+        // &mouse_speed MS_SNIPE (S_D_MOD). See src/mouse_speed.c and
         // boards/shields/mona2/trackball_input.dtsi
         mouse_speed: mouse_speed {
             compatible              = "zmk,behavior-mouse-speed";
-            #binding-cells          = <0>;
+            #binding-cells          = <1>;
         };
 
         td_sqt: tap_dance_quote {
