@@ -14,6 +14,8 @@
 	&kp Z           &kp X           &kp C           &kp V           &kp B           ________            ________        &kp N           &kp M           &kp COMMA       &kp DOT         &kp FSLH
 	________        ________        ________        &mo MOUSE       &kp LSHFT       &mo LOWER           &mo RAISE       &kp SPACE       ________
 		>;
+		// Wheel: clockwise turns the volume up
+		sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
 	};
   };
 };

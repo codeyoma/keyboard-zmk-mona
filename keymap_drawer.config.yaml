@@ -17,3 +17,7 @@ parse_config:
     "&mkp MB4": Back
     "&mkp MB5": Forward
     "&mouse_speed": Speed level
+draw_config:
+  # The wheel, drawn as one more key by scripts/keymap.sh
+  svg_extra_style: |
+    .keypos-42 rect { rx: 35px; ry: 35px; }
