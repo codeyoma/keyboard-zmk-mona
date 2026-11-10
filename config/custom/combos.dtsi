@@ -22,9 +22,10 @@
 		│ 21  22  23  24  25 │26 27 │ 28  29  30  31  32 │
 		│ 33  34  35  36  37 │38 39 │ 40              41 │
 		╰────────────────────╯      ╰────────────────────╯
-		The Sweep's thumb keys are 37 38 (left) and 39 40 (right).
+		Thumb keys, as on the Charybdis: 36 Mouse, 37 Shift, 38 Lower (left), 39 Raise, 40 Space (right).
 		*/
 
+		COMBO_(tab,			&kp TAB,			36	37,	DEFAULT COLEMAK LOWER,			CB_MINIMUM_SPEED)
 		COMBO_(escape_,		&kp ESC,			37	38,	DEFAULT COLEMAK RAISE,			CB_MINIMUM_SPEED)
 		COMBO_(enter,		&kp ENTER,			39	40,	DEFAULT COLEMAK LOWER,			CB_MINIMUM_SPEED)
 

@@ -1,6 +1,6 @@
 description: |
-  Scales input values by a mouse key speed level (src/mouse_speed.c). The parameter is the
-  level to use: 0 for the current level, or a fixed level such as 1 for sniping.
+  Turns sensor counts into the CPI of the current speed level (src/mouse_speed.c). The
+  parameter is 0 for the current level's CPI, or a fixed CPI such as the sniping CPI.
 
 compatible: "zmk,input-processor-mouse-speed"
 
@@ -13,3 +13,11 @@ properties:
   codes:
     type: array
     required: true
+  sensor-cpi:
+    type: int
+    required: true
+    description: The CPI the sensor reports at (its res-cpi)
+  cpi-levels:
+    type: array
+    required: true
+    description: The CPI of each speed level, slowest first

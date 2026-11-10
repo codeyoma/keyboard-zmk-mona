@@ -3,11 +3,11 @@
  *
  * Mouse key speed levels.
  *
- * &mouse_speed steps the level 1 -> 2 -> ... -> CONFIG_ZMK_MOUSE_SPEED_LEVELS -> 1. The
- * zmk,input-processor-mouse-speed processors scale mouse key movement and scrolling by
- * level / CONFIG_ZMK_MOUSE_SPEED_LEVELS, so the top level runs at the full &mmv / &msc speed.
- * The processor's parameter picks the level: 0 uses the current level, and 1 or more forces
- * that level (used for sniping). The level is saved to flash, so it survives a restart.
+ * &mouse_speed steps the level 1 -> 2 -> ... -> CONFIG_ZMK_MOUSE_SPEED_LEVELS -> 1, like
+ * DPI_MOD on a QMK Charybdis. A zmk,input-processor-mouse-speed processor turns the sensor's
+ * counts (taken at its sensor-cpi) into the CPI of the current level, from its cpi-levels list.
+ * The processor's parameter: 0 uses the current level's CPI, any other value is a fixed CPI
+ * (used for sniping). The level is saved to flash, so it survives a restart.
  */
 
 #include <zephyr/device.h>
@@ -101,6 +101,8 @@ BEHAVIOR_DT_INST_DEFINE(0, NULL, NULL, NULL, NULL, POST_KERNEL,
 
 struct mouse_speed_scaler_config {
     uint8_t type;
+    uint16_t sensor_cpi;
+    const uint16_t *cpi_levels;
     size_t codes_len;
     uint16_t codes[];
 };
@@ -118,16 +120,16 @@ static int mouse_speed_handle_event(const struct device *dev, struct input_event
             continue;
         }
 
-        uint8_t applied = param1 ? MIN(param1, LEVELS) : level;
+        int32_t cpi = param1 ? param1 : cfg->cpi_levels[level - 1];
 
-        // Keep the remainder, so slow keys still move a little at the low levels
-        int32_t value = event->value * applied;
+        // Keep the remainder, so slow movements are not lost at the low levels
+        int32_t value = event->value * cpi;
         if (state && state->remainder) {
             value += *state->remainder;
         }
-        int32_t scaled = value / LEVELS;
+        int32_t scaled = value / cfg->sensor_cpi;
         if (state && state->remainder) {
-            *state->remainder = value - scaled * LEVELS;
+            *state->remainder = value - scaled * cfg->sensor_cpi;
         }
         event->value = scaled;
         break;
@@ -140,8 +142,13 @@ static struct zmk_input_processor_driver_api mouse_speed_scaler_driver_api = {
 };
 
 #define MOUSE_SPEED_SCALER_INST(n)                                                                 \
+    BUILD_ASSERT(DT_INST_PROP_LEN(n, cpi_levels) == LEVELS,                                        \
+                 "cpi-levels needs one CPI per mouse speed level");                                 \
+    static const uint16_t mouse_speed_cpi_levels_##n[] = DT_INST_PROP(n, cpi_levels);              \
     static const struct mouse_speed_scaler_config mouse_speed_scaler_config_##n = {                \
         .type = DT_INST_PROP_OR(n, type, INPUT_EV_REL),                                            \
+        .sensor_cpi = DT_INST_PROP(n, sensor_cpi),                                                 \
+        .cpi_levels = mouse_speed_cpi_levels_##n,                                                  \
         .codes_len = DT_INST_PROP_LEN(n, codes),                                                   \
         .codes = DT_INST_PROP(n, codes),                                                           \
     };                                                                                             \

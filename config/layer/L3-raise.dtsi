@@ -9,7 +9,7 @@
 	raise_layer {
 		label = "Raise";
 		bindings = <
-	&kp F9          &kp F10         &kp F11         &kp F12         &tog MOUSE                                          &kp HOME        &kp PG_DN       &kp PG_UP       &kp END         &kp BSPC
+	&kp F9          &kp F10         &kp F11         &kp F12         XXXXXXXX                                            &kp HOME        &kp PG_DN       &kp PG_UP       &kp END         &kp BSPC
 	&kp F5          &kp F6          &kp F7          &kp F8          XXXXXXXX                            ________        &kp LEFT        &kp DOWN        &kp UP          &kp RIGHT       &focus
 	&kp F1          &kp F2          &kp F3          &kp F4          XXXXXXXX        ________            ________        &kp INS         &kp DEL         XXXXXXXX        XXXXXXXX        XXXXXXXX
 	________        ________        ________        ________        ________        ________            ________        ________        ________

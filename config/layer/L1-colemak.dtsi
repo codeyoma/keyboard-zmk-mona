@@ -12,7 +12,7 @@
 	&kp Q           &kp W           &kp F           &kp P           &kp G                                               &kp J           &kp L           &kp U           &kp Y           &kp SEMI
 	HM_LP A         HM_LR R         HM_LM S         HM_LI T         &kp D                               ________        &kp H           HM_RI N         HM_RM E         HM_RR I         HM_RP O
 	&kp Z           &kp X           &kp C           &kp V           &kp B           ________            ________        &kp K           &kp M           &kp COMMA       &kp DOT         &kp FSLH
-	________        ________        ________        ________        HM_LI TAB       &mo LOWER           &mo RAISE       &kp SPACE       ________
+	________        ________        ________        &mo MOUSE       &kp LSHFT       &mo LOWER           &mo RAISE       &kp SPACE       ________
 		>;
 	};
   };

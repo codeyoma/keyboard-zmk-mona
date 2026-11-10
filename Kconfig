@@ -13,7 +13,7 @@ config ZMK_MOUSE_SPEED_LEVELS
     int "Number of mouse key speed levels"
     default 4
     help
-      Level N moves at N / ZMK_MOUSE_SPEED_LEVELS of the full mouse key speed.
+      The CPI of each level is set by the cpi-levels of the input processor.
 
 config ZMK_MOUSE_SPEED_DEFAULT_LEVEL
     int "Mouse key speed level before any level has been saved"

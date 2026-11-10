@@ -1,0 +1,53 @@
+#include <dt-bindings/zmk/input_transform.h>
+#include <input/processors.dtsi>
+
+// Layer indexes, as in config/mona2.keymap
+#define NONE	0
+#define DEFAULT	0
+#define COLEMAK	1
+#define LOWER	2
+#define RAISE	3
+#define ADJUST	4
+#define MOUSE   5
+#define SCROLL  6
+#define SNIPE   7
+#define TEST	8
+
+/ {
+  // Runs the trackball at the CPI of the speed level picked with &mouse_speed (src/mouse_speed.c).
+  // The levels are the Charybdis QMK DPI steps: CHARYBDIS_MINIMUM_DEFAULT_DPI 1200 plus
+  // CHARYBDIS_DEFAULT_DPI_CONFIG_STEP 400, four steps.
+  mouse_speed_xy: mouse_speed_xy {
+    compatible = "zmk,input-processor-mouse-speed";
+    #input-processor-cells = <1>;
+    type = <INPUT_EV_REL>;
+    codes = <INPUT_REL_X INPUT_REL_Y>;
+    sensor-cpi = <2400>;                      // res-cpi in mona2_paw3222.dtsi
+    cpi-levels = <1200 1600 2000 2400>;
+    track-remainders;
+  };
+
+  trackball_listener: trackball_listener {
+    compatible = "zmk,input-listener";
+    device = <&trackball>;
+
+    input-processors = <&mouse_speed_xy 0>;
+
+    // Holding Snipe runs at 600 CPI, the Charybdis CHARYBDIS_MINIMUM_SNIPING_DPI
+    snipe {
+      layers = <SNIPE>;
+      input-processors = <&mouse_speed_xy 600>;
+    };
+
+    // The ball becomes a scroll wheel; rolling it towards you scrolls down.
+    // 1/58 of the raw ball movement at res-cpi 2400; raise the divisor to scroll slower.
+    scroll {
+      layers = <SCROLL>;
+      input-processors = <
+        &zip_xy_transform (INPUT_TRANSFORM_Y_INVERT)
+        &zip_xy_scaler 1 58
+        &zip_xy_to_scroll_mapper
+      >;
+    };
+  };
+};

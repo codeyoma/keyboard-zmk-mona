@@ -1,4 +1,4 @@
-layout: { dts_layout: config/boards/shields/mona2/mona2.dtsi }
+layout: { dts_layout: boards/shields/mona2/mona2.dtsi }
 layers:
   yoma:
   - - Q
@@ -37,8 +37,8 @@ layers:
   - - {t: ▽, type: trans}
     - {t: ▽, type: trans}
     - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: TAB, h: LSHFT}
+    - Mouse
+    - LSHFT
     - Lower
     - Raise
     - SPACE
@@ -80,14 +80,14 @@ layers:
   - - {t: ▽, type: trans}
     - {t: ▽, type: trans}
     - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: TAB, h: LSHFT}
+    - Mouse
+    - LSHFT
     - Lower
     - Raise
     - SPACE
     - {t: ▽, type: trans}
   Lower:
-  - [CAPS, HOME, PG UP, PG DN, END, '', '7', '8', '9', BSPC, '[']
+  - [GLOBE, HOME, PG UP, PG DN, END, '', '7', '8', '9', BSPC, '[']
   - - ']'
     - '{'
     - '}'
@@ -120,17 +120,7 @@ layers:
     - '0'
     - {t: ▽, type: trans}
   Raise:
-  - - F9
-    - F10
-    - F11
-    - F12
-    - {t: Mouse, h: toggle}
-    - HOME
-    - PG DN
-    - PG UP
-    - END
-    - BSPC
-    - F5
+  - [F9, F10, F11, F12, '', HOME, PG DN, PG UP, END, BSPC, F5]
   - - F6
     - F7
     - F8
@@ -206,43 +196,119 @@ layers:
     - Test
     - {t: ▽, type: trans}
   Mouse:
-  - - ''
-    - ''
-    - Move up
-    - ''
-    - {t: Mouse, h: toggle}
-    - ''
-    - ''
-    - ''
-    - ''
-    - ''
-    - ''
-  - - Move left
-    - Move down
-    - Move right
-    - ''
+  - ['', '', '', '', '', '', '', '', '', '', LCTRL]
+  - - LGUI
+    - LALT
+    - LSHFT
+    - Speed level
     - {t: ▽, type: trans}
     - Back
     - Left click
     - Right click
     - Middle click
     - Forward
-    - LCTRL
-  - - LGUI
-    - LALT
-    - LSHFT
-    - ''
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - Speed level
+    - Snipe
+  - - ''
+    - {t: Scroll, h: toggle}
     - Scroll
     - ''
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
     - ''
-    - Snipe
+    - ''
+    - ''
+    - ''
+    - ''
+  - - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {type: held}
+    - ''
+    - {t: ▽, type: trans}
+    - Raise
+    - ''
+    - {t: ▽, type: trans}
+  Scroll:
   - - {t: ▽, type: trans}
     - {t: ▽, type: trans}
     - {t: ▽, type: trans}
     - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+  - - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+  - - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {type: held}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+  - - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {type: held}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+  Snipe:
+  - - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+  - - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {type: held}
+  - - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+  - - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {type: held}
     - {t: ▽, type: trans}
     - {t: ▽, type: trans}
     - {t: ▽, type: trans}
@@ -291,93 +357,10 @@ layers:
     - {t: ▽, type: trans}
     - {type: held}
     - {t: ▽, type: trans}
-  Snipe:
-  - - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-  - - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-  - - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {type: held}
-  - - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-  Scroll:
-  - - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - Scroll down
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-  - - Scroll right
-    - Scroll up
-    - Scroll left
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-  - - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {type: held}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-  - - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
 combos:
+- p: [36, 37]
+  k: TAB
+  l: [yoma, ARST, Lower]
 - p: [37, 38]
   k: ESC
   l: [yoma, ARST, Raise]

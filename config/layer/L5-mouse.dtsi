@@ -1,0 +1,21 @@
+/**
+ * Held with the left outer thumb key. Laid out like the Charybdis 3x5 QMK mouse layer, for the
+ * trackball: modifiers and buttons on the home row; Snipe, scroll toggle, held scroll and the
+ * speed step (DPI_MOD on the Charybdis) on the left.
+ */
+
+/ {
+  keymap {
+    compatible = "zmk,keymap";
+
+	mouse_layer {
+		label = "Mouse";
+		bindings = <
+	XXXXXXXX        XXXXXXXX        XXXXXXXX        XXXXXXXX        XXXXXXXX                                            XXXXXXXX        XXXXXXXX        XXXXXXXX        XXXXXXXX        XXXXXXXX
+	&kp LCTRL       &kp LGUI        &kp LALT        &kp LSHFT       &mouse_speed                        ________        &mkp MB4        &mkp LCLK       &mkp RCLK       &mkp MCLK       &mkp MB5
+	&mo SNIPE       XXXXXXXX        &tog SCROLL     &mo SCROLL      XXXXXXXX        ________            ________        XXXXXXXX        XXXXXXXX        XXXXXXXX        XXXXXXXX        XXXXXXXX
+	________        ________        ________        ________        XXXXXXXX        ________            &mo RAISE       XXXXXXXX        ________
+		>;
+	};
+  };
+};

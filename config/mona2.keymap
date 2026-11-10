@@ -1,0 +1,76 @@
+#include <behaviors.dtsi>
+
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/pointing.h>
+
+#include <dt-bindings/zmk/outputs.h>
+
+#define ALL		(-1)
+#define NONE	0
+#define DEFAULT	0
+#define COLEMAK	1
+#define LOWER	2
+#define RAISE	3
+#define ADJUST	4
+#define MOUSE	5
+#define SCROLL	6
+#define SNIPE	7
+#define TEST	8
+
+#define ________	&trans
+#define XXXXXXXX 	&none
+
+#define FOCUS_NEXT	&kp LC(F4)
+#define FOCUS_MENU	&kp LC(F2)
+#define GO_BACK		&kp LG(LBKT)
+#define GO_FORWARD	&kp LG(RBKT)
+
+#define HM_LP	&hm LCTRL
+#define HM_LR	&hm LGUI
+#define HM_LM	&hm LALT
+#define HM_LI	&hm LSHFT
+
+#define HM_RI	&hm LSHFT
+#define HM_RM	&hm LALT
+#define HM_RR	&hm LGUI
+#define HM_RP	&hm LCTRL
+
+#define TAPPING_TERM_MS		220
+#define LT_TAPPING_TERM_MS	250
+#define TD_TAPPING_TERM_MS	350
+#define QUICK_TAP_MS		140
+#define GLOBAL_QUICK_TAP_MS	150
+#define IDLE_MS				125
+#define CB_MINIMUM_SPEED	70
+#define	DEFAULT_SPEED		50
+
+#define PARAM_ZERO	0
+#define PARAM_ONE	1
+#define PARAM_TWO	2
+
+#include "custom/behaviors.dtsi"
+#include "custom/combos.dtsi"
+#include "custom/macros.dtsi"
+
+
+#include "layer/L1-qwerty.dtsi"
+#include "layer/L1-colemak.dtsi"
+#include "layer/L2-lower.dtsi"
+#include "layer/L3-raise.dtsi"
+#include "layer/L4-adjust.dtsi"
+#include "layer/L5-mouse.dtsi"
+#include "layer/L6-scroll.dtsi"
+#include "layer/L7-snipe.dtsi"
+#include "layer/L8-test.dtsi"
+
+
+/ {
+	conditional_layers {
+		compatible = "zmk,conditional-layers";
+		tri_layer   {
+			if-layers = <LOWER RAISE>;
+			then-layer = <ADJUST>;
+		};
+	};
+};

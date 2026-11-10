@@ -1,6 +1,6 @@
 /**
- * Held with the / key on the Mouse layer. Every key falls through to the Mouse layer; while this
- * layer is on, the input listeners in mona2.keymap slow the mouse keys (speed level 1) and the trackball.
+ * Held with the Z key on the Mouse layer: the trackball runs at the slowest speed level
+ * (see boards/shields/mona2/trackball_input.dtsi). Every key falls through to the Mouse layer.
  */
 
 / {

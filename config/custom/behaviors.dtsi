@@ -29,6 +29,13 @@
             bindings                = <&kp>, <&kp>;
         };
 
+        // Steps the trackball speed level, see src/mouse_speed.c and
+        // boards/shields/mona2/trackball_input.dtsi
+        mouse_speed: mouse_speed {
+            compatible              = "zmk,behavior-mouse-speed";
+            #binding-cells          = <0>;
+        };
+
         td_sqt: tap_dance_quote {
             compatible              = "zmk,behavior-tap-dance";
             #binding-cells          = <0>;

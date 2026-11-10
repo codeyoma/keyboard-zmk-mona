@@ -1,0 +1,20 @@
+/**
+ * Held with the V key or toggled with the C key on the Mouse layer: the trackball scrolls instead of
+ * moving the pointer (see boards/shields/mona2/trackball_input.dtsi). Every key falls through to the Mouse layer.
+ */
+
+/ {
+  keymap {
+    compatible = "zmk,keymap";
+
+	scroll_layer {
+		label = "Scroll";
+		bindings = <
+	________        ________        ________        ________        ________                                            ________        ________        ________        ________        ________
+	________        ________        ________        ________        ________                            ________        ________        ________        ________        ________        ________
+	________        ________        ________        ________        ________        ________            ________        ________        ________        ________        ________        ________
+	________        ________        ________        ________        ________        ________            ________        ________        ________
+		>;
+	};
+  };
+};
