@@ -63,9 +63,9 @@
 		COMBO_(tilde,		&kp TILDE,			8	19,	DEFAULT COLEMAK LOWER,			CB_MINIMUM_SPEED)
 		COMBO_(grave,		&kp GRAVE,			9	20,	DEFAULT COLEMAK LOWER,			CB_MINIMUM_SPEED)
 
-		// Mouse buttons and held scroll on the right bottom row, combo term 50 ms as on the Charybdis
-		COMBO_(ms_btn1,		&mkp LCLK,			29	30	31,		DEFAULT COLEMAK LOWER,	MS_COMBO_TERM)
-		COMBO_(ms_btn2,		&mkp RCLK,			30	31	32,		DEFAULT COLEMAK LOWER,	MS_COMBO_TERM)
-		COMBO_(drag_scroll,	&mo SCROLL,			29	30	31	32,	DEFAULT COLEMAK LOWER,	MS_COMBO_TERM)
+		// Mouse buttons and held scroll on the right bottom row, as on the Charybdis
+		COMBO_(ms_btn1,		&mkp LCLK,			29	30	31,		DEFAULT COLEMAK LOWER,	CB_MINIMUM_SPEED)
+		COMBO_(ms_btn2,		&mkp RCLK,			30	31	32,		DEFAULT COLEMAK LOWER,	CB_MINIMUM_SPEED)
+		COMBO_(drag_scroll,	&mo SCROLL,			29	30	31	32,	DEFAULT COLEMAK LOWER,	CB_MINIMUM_SPEED)
 	};
 };
